@@ -12,8 +12,10 @@ bool game1_flag1 = true, game1_flag2 = true, game2_flag1 = true, game2_flag2 = t
 
 
 // 更新
-void SceneMgr_Update(){
-	switch (Scene){
+void SceneMgr_Update()
+{
+	switch (Scene)
+	{
 	case Scene_Menu:
 		Menu_Update();
 		break;
@@ -37,8 +39,10 @@ void SceneMgr_Update(){
 }
 
 // 描画
-void SceneMgr_Draw(){
-	switch (Scene){
+void SceneMgr_Draw()
+{
+	switch (Scene)
+	{
 	case Scene_Menu:
 		Menu_Draw();
 		break;
@@ -62,21 +66,35 @@ void SceneMgr_Draw(){
 }
 
 // シーン変更
-void SceneMgr_ChangeScene(Scene_S Nextscene){
+void SceneMgr_ChangeScene(Scene_S Nextscene)
+{
 	Scene = Nextscene;
-	switch (Scene){
+	switch (Scene)
+	{
 	case Scene_Game1:
-		if (game1_flag1 == true) { Game1_Init1(); game1_flag1 = false; }
+		if (game1_flag1 == true)
+		{
+			Game1_Init1(); game1_flag1 = false;
+		}
 		Game1_Init2();
 		break;
 
 	case Scene_Game2:
-		if (game2_flag1 == true) { Game2_Init1(); game2_flag1 = false; }
-		if (game2_flag2 == true) { Game2_Init2(); game2_flag2 = false; }
+		if (game2_flag1 == true)
+		{
+			Game2_Init1(); game2_flag1 = false;
+		}
+		if (game2_flag2 == true)
+		{
+			Game2_Init2(); game2_flag2 = false;
+		}
 		break;
 
 	case Scene_Result:
-		if (result_flag == true) { Result_Init(); result_flag = false; }
+		if (result_flag == true)
+		{
+			Result_Init(); result_flag = false;
+		}
 		break;
 
 	case Scene_Sb:

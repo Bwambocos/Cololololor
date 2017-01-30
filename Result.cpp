@@ -20,7 +20,8 @@ int before_R = -1;
 int tmp_R = -1;
 
 // èâä˙âª
-void Result_Init() {
+void Result_Init()
+{
 	G_Main_R[0] = LoadGraph("data\\graph\\Clear_Main.png");
 	G_Main_R[1] = LoadGraph("data\\graph\\Over_Main.png");
 	G_Select_R = LoadGraph("data\\graph\\Result_select.png");
@@ -29,27 +30,55 @@ void Result_Init() {
 
 // çXêV
 void Result_Update() {
-	if (getCorO_G1() == 0){ CorO_flag_R = 0; }
-	if (getCorO_G1() == -1){ CorO_flag_R = -1; }
+	if (getCorO_G1() == 0) { CorO_flag_R = 0; }
+	if (getCorO_G1() == -1) { CorO_flag_R = -1; }
 
-	if (CorO_flag_R == 0){
-		if (CheckMouseIn(100, 150, 530, 200) == true) { F_frame_R = true; F_sound_R = true; before_R = 0; }
-		if (CheckMouseIn(100, 150, 530, 200) == false) { F_frame_R = false; F_sound_R = false; before_R = -1; }
+	if (CorO_flag_R == 0)
+	{
+		if (CheckMouseIn(100, 150, 530, 200) == true)
+		{
+			F_frame_R = true; F_sound_R = true; before_R = 0;
+		}
+		if (CheckMouseIn(100, 150, 530, 200) == false)
+		{
+			F_frame_R = false; F_sound_R = false; before_R = -1;
+		}
 		if (CheckMouseClick(100, 150, 530, 200) == true) { SceneMgr_ChangeScene(Scene_Sb); }
-		if (CheckMouseIn(70, 250, 560, 320) == true) { F_frame1_R = true; F_sound1_R = true; before_R = 1; }
-		if (CheckMouseIn(70, 250, 560, 320) == false) { F_frame1_R = false; F_sound1_R = false; before_R = -1; }
+		if (CheckMouseIn(70, 250, 560, 320) == true)
+		{
+			F_frame1_R = true; F_sound1_R = true; before_R = 1;
+		}
+		if (CheckMouseIn(70, 250, 560, 320) == false)
+		{
+			F_frame1_R = false; F_sound1_R = false; before_R = -1;
+		}
 		if (CheckMouseClick(70, 250, 560, 320) == true) { SceneMgr_ChangeScene(Scene_Game1); }
 	}
-	if (CorO_flag_R == -1){
-		if (CheckMouseIn(70, 240, 560, 290) == true) { F_frame1_R = true; F_sound1_R = true; before_R = 1; }
-		if (CheckMouseIn(70, 240, 560, 290) == false) { F_frame1_R = false; F_sound1_R = false; before_R = -1; }
+	if (CorO_flag_R == -1)
+	{
+		if (CheckMouseIn(70, 240, 560, 290) == true)
+		{
+			F_frame1_R = true; F_sound1_R = true; before_R = 1;
+		}
+		if (CheckMouseIn(70, 240, 560, 290) == false)
+		{
+			F_frame1_R = false; F_sound1_R = false; before_R = -1;
+		}
 		if (CheckMouseClick(70, 240, 560, 290) == true) { SceneMgr_ChangeScene(Scene_Game1); }
 	}
-	if (CheckMouseIn(70, 350, 560, 420) == true) { F_frame2_R = true; F_sound2_R = true; before_R = 2; }
-	if (CheckMouseIn(70, 350, 560, 420) == false) { F_frame2_R = false; F_sound2_R = false; before_R = -1; }
+	if (CheckMouseIn(70, 350, 560, 420) == true)
+	{
+		F_frame2_R = true; F_sound2_R = true; before_R = 2;
+	}
+	if (CheckMouseIn(70, 350, 560, 420) == false)
+	{
+		F_frame2_R = false; F_sound2_R = false; before_R = -1;
+	}
 	if (CheckMouseClick(70, 350, 560, 420) == true) { SceneMgr_ChangeScene(Scene_Menu); }
-	if (F_sound1_R == true || F_sound2_R == true) {
-		if (before_R != tmp_R) {
+	if (F_sound1_R == true || F_sound2_R == true)
+	{
+		if (before_R != tmp_R)
+		{
 			PlaySoundMem(S_Select_R, DX_PLAYTYPE_BACK);
 			tmp_R = before_R;
 		}
@@ -57,22 +86,28 @@ void Result_Update() {
 }
 
 // ï`âÊ
-void Result_Draw() {
-	if (CorO_flag_R == -1){ 
+void Result_Draw()
+{
+	if (CorO_flag_R == -1)
+	{ 
 		DrawGraph(0, 0, G_Main_R[1], TRUE);
 	}
-	if (CorO_flag_R == 0){
+	if (CorO_flag_R == 0)
+	{
 		DrawGraph(0, 0, G_Main_R[0], TRUE);
 	}
 
-	if (CorO_flag_R == 0){
-		if (F_frame_R == true){
+	if (CorO_flag_R == 0)
+	{
+		if (F_frame_R == true)
+		{
 			DrawGraph(60, 145, G_Select_R, TRUE);
 		}
-		if (F_frame1_R == true){ DrawGraph(60, 245, G_Select_R, TRUE); }
+		if (F_frame1_R == true) { DrawGraph(60, 245, G_Select_R, TRUE); }
 	}
-	if (CorO_flag_R == -1){
-		if (F_frame1_R == true){ DrawGraph(60, 225, G_Select_R, TRUE); }
+	if (CorO_flag_R == -1)
+	{
+		if (F_frame1_R == true) { DrawGraph(60, 225, G_Select_R, TRUE); }
 	}
 	if (F_frame2_R == true){ DrawGraph(60, 355, G_Select_R, TRUE); }
 }
