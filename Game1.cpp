@@ -25,7 +25,6 @@ typedef struct problem_G1
 }problem_data_G1;
 
 problem_data_G1 Color_data_G1[STAGE_MAX];
-FILE *fp_G1;
 int Score_num_G1 = 0;
 int Total_num_G1;
 int Total_sqrt_G1;
