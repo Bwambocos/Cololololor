@@ -50,10 +50,10 @@ void Sb_Init()
 	}
 	Score_Sb = getScore_G1();
 	Level_Sb = getLevel_G1();
-	sprintf(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
-	if ((fp = fopen(Filename_Sb, "rb")) == NULL)
+	sprintfDx(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
+	if (errno_t error = (fopen_s(&fp, Filename_Sb, "rb")) != 0 || fp == NULL)
 	{
-		printfDx("FILE OPEN (LOAD) ERROR! ÜÝÜÝ!\n");
+		printfDx("FILE READ ERROR\n");
 	}
 
 	else
@@ -111,10 +111,10 @@ void Sb_Update()
 		}
 		sort(begin(save_data), end(save_data), [](const save_data_t&l, const save_data_t&r) {return l.score > r.score; });
 		Level_Sb = getLevel_G1();
-		sprintf(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
-		if ((fp = fopen(Filename_Sb, "wb")) == NULL)
+		sprintfDx(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
+		if (errno_t error = (fopen_s(&fp, Filename_Sb, "wb")) != 0 || fp == NULL)
 		{
-			printfDx("FILE OPEN (WRITE) ERROR! ÜÝÜÝ!\n");
+			printfDx("FILE WRITE ERROR\n");
 		}
 		else
 		{
