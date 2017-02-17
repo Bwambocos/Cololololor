@@ -4,7 +4,8 @@
 #include "SceneMgr.h"
 #include "Menu.h"
 
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
+{
 
 	// èîèàóù
 	SetOutApplicationLogValidFlag(FALSE);
@@ -21,7 +22,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int){
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// ÉÅÉCÉìÉãÅ[Év
-	while (ProcessMessage() == 0){
+	while (ProcessMessage() == 0)
+	{
 		ClearDrawScreen();
 		Keyboard_Update();
 		SceneMgr_Update();

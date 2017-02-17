@@ -2,24 +2,31 @@
 
 static int m_Key[256];  // 入力状態格納
 
-void Keyboard_Update(){  // キーの入力状態更新
+// キーの入力状態更新
+void Keyboard_Update()
+{
 
 	static char tmpKey[256]; // 入力状態を格納
 
 	GetHitKeyStateAll(tmpKey);  // 全ての入力状態を得る
 
-	for (int i = 0; i < 256; i++){
+	for (int i = 0; i < 256; i++)
+	{
 
-		if (tmpKey[i] != 0){  // i番のキーが押されていたら
+		if (tmpKey[i] != 0)		// i番のキーが押されていたら
+		{
 			m_Key[i]++;
 		}
 
-		else{  // 押されていなければ
+		else					// 押されていなければ
+		{
 			m_Key[i] = 0;
 		}
 	}
 }
 
-int Keyboard_Get(int KeyCode){  // KeyCodeの入力状態を取得する
+// KeyCodeの入力状態を取得する
+int Keyboard_Get(int KeyCode)
+{
 	return m_Key[KeyCode];  // 入力状態を返す
 }

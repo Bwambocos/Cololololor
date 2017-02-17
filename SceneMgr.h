@@ -1,7 +1,8 @@
 #pragma once
 #include "DxLib.h"
 
-typedef enum{
+typedef enum
+{
 	Scene_Menu,
 	Scene_Game1,
 	Scene_Game2,
