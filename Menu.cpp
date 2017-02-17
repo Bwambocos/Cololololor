@@ -4,8 +4,6 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 
-int Appeal();
-
 // グローバル変数
 int G_Main_M;
 int G_thum_M[2];
@@ -47,7 +45,7 @@ void Menu_Update()
 	{
 		F_frame2_M = false; F_sound2_M = false; before_M = -1;
 	}
-	if (CheckMouseClick(370, 150, 610, 360) == true) { Appeal(); }
+	if (CheckMouseClick(370, 150, 610, 360) == true) { SceneMgr_ChangeScene(Scene_Game2); }
 	if (F_sound1_M == true || F_sound2_M == true)
 	{
 		if (before_M != tmp_M)
@@ -70,24 +68,4 @@ void Menu_Draw()
 	DrawGraph(0, 0, G_Main_M, TRUE);
 	DrawGraph(30, 150, G_thum_M[0], TRUE);
 	DrawGraph(370, 150, G_thum_M[1], TRUE);
-}
-
-inline int Appeal()
-{
-	int flag;
-	flag = MessageBox
-	(
-		NULL,
-		TEXT("こちらのゲームモードは来年の文化祭に公開予定です！\n来年も是非来てくださいね！"),
-		TEXT("Information"),
-		MB_OK | MB_ICONINFORMATION
-	);
-
-	if (flag == IDOK)
-	{
-		SceneMgr_ChangeScene(Scene_Menu);
-		return 1;
-	}
-
-	return 0;
 }

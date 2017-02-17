@@ -17,11 +17,11 @@ unsigned ColorToDxColor_G1(Color_t c)
 {
 	return GetColor(c.red, c.green, c.blue);
 }
-typedef struct ball_t	// 球1つ
+struct ball	// 球1つ
 {
 	Color_t color;
 	int pos_x, pos_y;
-}ball;
+};
 
 ball ColorBall[LEVEL_MAX * 5];
 int G_Main;
@@ -31,7 +31,8 @@ int ansBall;
 // 初期化（一回のみ）
 void Game2_Init1()
 {
-
+	G_Main = LoadGraph("data\\graph\\Game2_Main.png");
+	S_BGM = LoadSoundMem("data\\sound\\bgm.mp3");
 }
 
 // 初期化（毎回）
@@ -49,5 +50,6 @@ void Game2_Update()
 // 描画
 void Game2_Draw()
 {
-
+	// 画像
+	DrawGraph(0, 0, G_Main, TRUE);
 }
