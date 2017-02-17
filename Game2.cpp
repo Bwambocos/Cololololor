@@ -19,24 +19,42 @@ unsigned ColorToDxColor_G1(Color_t c)
 }
 struct ball	// 球1つ
 {
-	Color_t color;
+	Color_t color[LEVEL_MAX * 5];
 	int pos_x, pos_y;
 };
+struct problem
+{
+	ball ColorBall;
+	int ans;
+};
 
-ball ColorBall[LEVEL_MAX * 5];
-int G_Main;
+problem Color_data[STAGE_MAX];
+int G_Main = -1;
 int S_BGM;
 int F_Main;
 int Score_num, Stage_num, Level_num;
-int ansBall;
 
 // 初期化（一回のみ）
 void Game2_Init1()
 {
 	Score_num = 0, Stage_num = 0, Level_num = 1;
-	G_Main = LoadGraph("data\\graph\\Game2_Main.png");
-	S_BGM = LoadSoundMem("data\\sound\\bgm.mp3");
-	F_Main = CreateFontToHandle("Meiryo UI", 32, 5, DX_FONTTYPE_ANTIALIASING_8X8);
+	for (int i = 0; i < STAGE_MAX; ++i)
+	{
+		for (int j = 0; j < Level_num * 5; ++j)
+		{
+			Color_data[i].ColorBall.color[j].red = GetRand(255);
+			Color_data[i].ColorBall.color[j].green = GetRand(255);
+			Color_data[i].ColorBall.color[j].blue = GetRand(255);
+		}
+		Color_data[i].ans = GetRand((Level_num * 5) - 1);
+	}
+
+	if (G_Main == -1)
+	{
+		G_Main = LoadGraph("data\\graph\\Game2_Main.png");
+		S_BGM = LoadSoundMem("data\\sound\\bgm.mp3");
+		F_Main = CreateFontToHandle("Meiryo UI", 32, 5, DX_FONTTYPE_ANTIALIASING_8X8);
+	}
 }
 
 // 初期化（毎回）
@@ -47,6 +65,7 @@ void Game2_Init2()
 	{
 		++Level_num, Stage_num = 0;
 		if (Level_num >= LEVEL_MAX) { Level_num = 1; }
+		Game2_Init1();
 	}
 }
 
