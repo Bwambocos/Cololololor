@@ -25,7 +25,6 @@ typedef struct problem_G1
 }problem_data_G1;
 
 problem_data_G1 Color_data_G1[STAGE_MAX];
-FILE *fp_G1;
 int Score_num_G1 = 0;
 int Total_num_G1;
 int Total_sqrt_G1;
@@ -80,7 +79,7 @@ void Game1_Init2()
 		if (Level_num_G1 > LEVEL_MAX - 1) { Level_num_G1 = 1; }
 		Game1_Init1();
 	}
-	Total_sqrt_G1 = sqrt((double)Color_data_G1[Stage_num_G1].Total);
+	Total_sqrt_G1 = (int)sqrt(Color_data_G1[Stage_num_G1].Total);
 	Mouse_memo_G1 = 230 / Total_sqrt_G1;
 	for (int i = 0; i < Color_data_G1[Stage_num_G1].Total; i++)
 	{
@@ -118,13 +117,24 @@ void Game1_Update()
 			PlaySoundMem(S_right_G1, DX_PLAYTYPE_BACK);
 			SceneMgr_ChangeScene(Scene_Game1);
 		}
-		Score_num_G1 += (100 - Time_num_G1) * 100;
+		Score_num_G1 += (100 - (int)Time_num_G1) * 100;
 	}
 
 #ifdef _DEBUG
-	if (Keyboard_Get(KEY_INPUT_DELETE) != 0){
-		if (Stage_num_G1 == STAGE_MAX - 1){ StopSoundMem(S_BGM_G1); PlaySoundMem(S_right_G1, DX_PLAYTYPE_BACK); CorO_flag_G1 = 0; SceneMgr_ChangeScene(Scene_Result); }
-		else{ PlaySoundMem(S_right_G1, DX_PLAYTYPE_BACK); SceneMgr_ChangeScene(Scene_Game1); }
+	if (Keyboard_Get(KEY_INPUT_DELETE) != 0)
+	{
+		if (Stage_num_G1 == STAGE_MAX - 1)
+		{
+			StopSoundMem(S_BGM_G1);
+			PlaySoundMem(S_right_G1, DX_PLAYTYPE_BACK);
+			CorO_flag_G1 = 0;
+			SceneMgr_ChangeScene(Scene_Result);
+		}
+		else
+		{
+			PlaySoundMem(S_right_G1, DX_PLAYTYPE_BACK);
+			SceneMgr_ChangeScene(Scene_Game1);
+		}
 	}
 #endif
 }
