@@ -84,10 +84,7 @@ void SceneMgr_ChangeScene(Scene_S Nextscene)
 		{
 			Game2_Init1(); game2_flag1 = false;
 		}
-		if (game2_flag2 == true)
-		{
-			Game2_Init2(); game2_flag2 = false;
-		}
+		Game2_Init2();
 		break;
 
 	case Scene_Result:
