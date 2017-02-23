@@ -7,7 +7,7 @@
 // define
 #define LEVEL_MAX 10
 #define STAGE_MAX 5
-#define BALL_NUM  5
+#define BALL_NUM  3
 
 // 構造体
 struct Color_t
@@ -39,12 +39,12 @@ int G_Main = -1;
 int S_BGM;
 int F_Main;
 int g_starttime, g_lasttime;
-int Score_num, Stage_num = -1, Level_num = 1;
+int Score_num, Stage_num, Level_num = 1;
 
 // 初期化（一回のみ）
 void Game2_Init1()
 {
-	Score_num = 0, Stage_num = 1;
+	Score_num = 0;
 	for (int i = 0; i < STAGE_MAX; ++i)
 	{
 		for (int j = 0; j < Level_num * BALL_NUM; ++j)
@@ -52,8 +52,25 @@ void Game2_Init1()
 			Color_data[i].ColorBall[j].color.red = GetRand(255);
 			Color_data[i].ColorBall[j].color.green = GetRand(255);
 			Color_data[i].ColorBall[j].color.blue = GetRand(255);
-			Color_data[i].ColorBall[j].pos_x = GetRand(640);
-			Color_data[i].ColorBall[j].pos_y = GetRand(480);
+			switch (j % 4)
+			{
+			case 1:
+				Color_data[i].ColorBall[j].pos_x = GetRand(640);
+				Color_data[i].ColorBall[j].pos_y = 0;
+				break;
+			case 2:
+				Color_data[i].ColorBall[j].pos_x = GetRand(640);
+				Color_data[i].ColorBall[j].pos_y = 480;
+				break;
+			case 3:
+				Color_data[i].ColorBall[j].pos_x = 0;
+				Color_data[i].ColorBall[j].pos_y = GetRand(480);
+				break;
+			case 0:
+				Color_data[i].ColorBall[j].pos_x = 640;
+				Color_data[i].ColorBall[j].pos_y = GetRand(480);
+				break;
+			}
 			Color_data[i].ColorBall[j].def_x = Color_data[i].ColorBall[j].pos_x;
 			Color_data[i].ColorBall[j].def_y = Color_data[i].ColorBall[j].pos_y;
 		}
@@ -71,11 +88,11 @@ void Game2_Init1()
 // 初期化（毎回）
 void Game2_Init2()
 {
-	if (Stage_num > 0) { ++Stage_num; }
+	++Stage_num;
 	if (Stage_num > STAGE_MAX)
 	{
 		++Level_num, Stage_num = 1;
-		if (Level_num >= LEVEL_MAX) { Level_num = 1; }
+		if (Level_num > LEVEL_MAX) { Level_num = 1; }
 		Game2_Init1();
 	}
 	g_starttime = GetNowCount();
