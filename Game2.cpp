@@ -21,8 +21,8 @@ unsigned ColorToDxColor(Color_t c)
 struct ball
 {
 	Color_t color;
-	int pos_x, pos_y;
-	int def_x, def_y;
+	double pos_x, pos_y;
+	double def_x, def_y;
 };
 struct problem
 {
@@ -31,7 +31,7 @@ struct problem
 };
 
 // 定数
-static const int BALL_MOVE_COST = 10000;		// 何ミリ秒かけて色玉を中心へ移動させるか
+static const int BALL_MOVE_COST = 150;
 
 // 変数
 problem Color_data[STAGE_MAX];
@@ -92,7 +92,10 @@ void Game2_Init2()
 	if (Stage_num > STAGE_MAX)
 	{
 		++Level_num, Stage_num = 1;
-		if (Level_num > LEVEL_MAX) { Level_num = 1; }
+		if (Level_num > LEVEL_MAX)
+		{
+			Level_num = 1;
+		}
 		Game2_Init1();
 	}
 	g_starttime = GetNowCount();
@@ -102,27 +105,36 @@ void Game2_Init2()
 void Game2_Update()
 {
 	g_lasttime = GetNowCount();
+	if ((g_lasttime - g_starttime) >= BALL_MOVE_COST * 40)
+	{
+		SceneMgr_ChangeScene(Scene_Game2);
+	}
+
+	// 色玉
 	for (int i = 0; i < Level_num * BALL_NUM; ++i)
 	{
+		double move_x = (Color_data[Stage_num - 1].ColorBall[i].def_x - 320) / BALL_MOVE_COST;
+		double move_y = (Color_data[Stage_num - 1].ColorBall[i].def_y - 240) / BALL_MOVE_COST;
+
 		if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 左上
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x += 1;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y += 1;
+			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
 		}
 		if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 右上
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= 1;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y += 1;
+			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
 		}
 		if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 左下
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x += 1;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= 1;
+			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
 		}
 		if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 右下
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= 1;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= 1;
+			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
 		}
 	}
 
