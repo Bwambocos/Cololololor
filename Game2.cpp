@@ -3,11 +3,13 @@
 #include "SceneMgr.h"
 #include "DxLib.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 // define
 #define LEVEL_MAX 10
 #define STAGE_MAX 5
 #define BALL_NUM  3
+#define BALL_R	  15
 
 // 構造体
 struct Color_t
@@ -23,6 +25,8 @@ struct ball
 	Color_t color;
 	double pos_x, pos_y;
 	double def_x, def_y;
+	bool mouse_in = false;
+	bool draw_flag = true;
 };
 struct problem
 {
@@ -31,7 +35,7 @@ struct problem
 };
 
 // 定数
-static const int BALL_MOVE_COST = 150;
+static const int BALL_MOVE_COST = 225;
 
 // 変数
 problem Color_data[STAGE_MAX];
@@ -116,25 +120,51 @@ void Game2_Update()
 		double move_x = (Color_data[Stage_num - 1].ColorBall[i].def_x - 320) / BALL_MOVE_COST;
 		double move_y = (Color_data[Stage_num - 1].ColorBall[i].def_y - 240) / BALL_MOVE_COST;
 
-		if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 左上
+		// クリック判定
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			if (CheckMouseClick(Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
+				Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
+			{
+				Color_data[Stage_num - 1].ColorBall[i].draw_flag = false;
+				if (i == Color_data[Stage_num - 1].ans)
+				{
+					Score_num += ((BALL_MOVE_COST * 40) - (g_lasttime - g_starttime));
+					SceneMgr_ChangeScene(Scene_Game2);
+				}
+			}
+			if (CheckMouseIn(Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
+				Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
+			{
+				Color_data[Stage_num - 1].ColorBall[i].mouse_in = true;
+			}
+			else
+			{
+				Color_data[Stage_num - 1].ColorBall[i].mouse_in = false;
+			}
 		}
-		if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 右上
+
+		// 座標更新
 		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
-		}
-		if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 左下
-		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
-		}
-		if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 右下
-		{
-			Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
-			Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 左上
+			{
+				Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+				Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			}
+			if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y <= 240)	// 右上
+			{
+				Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+				Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			}
+			if (Color_data[Stage_num - 1].ColorBall[i].pos_x <= 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 左下
+			{
+				Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+				Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			}
+			if (Color_data[Stage_num - 1].ColorBall[i].pos_x > 320 && Color_data[Stage_num - 1].ColorBall[i].pos_y > 240)	// 右下
+			{
+				Color_data[Stage_num - 1].ColorBall[i].pos_x -= move_x;
+				Color_data[Stage_num - 1].ColorBall[i].pos_y -= move_y;
+			}
 		}
 	}
 
@@ -149,21 +179,31 @@ void Game2_Update()
 // 描画
 void Game2_Draw()
 {
-	// 画像
-	DrawGraph(0, 0, G_Main, TRUE);
-
-	// 文字
-	DrawFormatStringToHandle(45, 410, GetColor(0, 0, 0), F_Main, "LEVEL %d", Level_num);
-	DrawFormatStringToHandle(450, 410, GetColor(0, 0, 0), F_Main, "STAGE %d", Stage_num);
-
 	// 色玉
 	for (int i = 0; i < Level_num * BALL_NUM; ++i)
 	{
-		DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, 15, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
-		DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, 15, GetColor(255, 255, 255), FALSE, 2);
-		if (i == Color_data[Stage_num - 1].ans)
+		if (Color_data[Stage_num - 1].ColorBall[i].draw_flag == true)
 		{
-			DrawRoundRect(285, 380, 355, 450, 15, 15, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
+			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
+			if (Color_data[Stage_num - 1].ColorBall[i].mouse_in == true)
+			{
+				DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
+			}
+			else
+			{
+				DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
+			}
 		}
 	}
+
+	// 画像
+	DrawGraph(0, 0, G_Main, TRUE);
+
+	// ステータス
+	DrawFormatStringToHandle(45, 410, GetColor(0, 0, 0), F_Main, "LEVEL %d", Level_num);
+	DrawFormatStringToHandle(450, 410, GetColor(0, 0, 0), F_Main, "STAGE %d", Stage_num);
+	DrawRoundRect(285, 380, 355, 450, 15, 15, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[Color_data[Stage_num - 1].ans].color), TRUE);
+
+	clsDx();
+	printfDx("%d\n", Score_num);
 }
