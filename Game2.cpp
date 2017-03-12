@@ -1,4 +1,7 @@
 // include
+#include <ctime>
+#include <vector>
+#include <algorithm>
 #include "Game2.h"
 #include "SceneMgr.h"
 #include "DxLib.h"
@@ -31,6 +34,7 @@ struct ball
 struct problem
 {
 	ball ColorBall[LEVEL_MAX * BALL_NUM];
+	std::vector<int>Ball_posx_list, Ball_posy_list;
 	int ans;
 };
 
@@ -59,25 +63,91 @@ void Game2_Init1()
 			switch (j % 4)
 			{
 			case 1:
-				Color_data[i].ColorBall[j].pos_x = GetRand(640);
+				while(true)
+				{
+					Color_data[i].ColorBall[j].pos_x = GetRand(640);
+					if (Color_data[i].Ball_posx_list.size() > 0)
+					{
+						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), Color_data[i].ColorBall[j].pos_x) == false)
+						{
+							Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+							break;
+						}
+					}
+					else
+					{
+						Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+						break;
+					}
+				}
 				Color_data[i].ColorBall[j].pos_y = 0;
 				break;
 			case 2:
-				Color_data[i].ColorBall[j].pos_x = GetRand(640);
+				while (true)
+				{
+					Color_data[i].ColorBall[j].pos_x = GetRand(640);
+					if (Color_data[i].Ball_posx_list.size() > 0)
+					{
+						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), Color_data[i].ColorBall[j].pos_x) == false)
+						{
+							Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+							break;
+						}
+					}
+					else
+					{
+						Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+						break;
+					}
+				}
 				Color_data[i].ColorBall[j].pos_y = 480;
 				break;
 			case 3:
 				Color_data[i].ColorBall[j].pos_x = 0;
-				Color_data[i].ColorBall[j].pos_y = GetRand(480);
+				while (true)
+				{
+					Color_data[i].ColorBall[j].pos_y = GetRand(640);
+					if (Color_data[i].Ball_posy_list.size() > 0)
+					{
+						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), Color_data[i].ColorBall[j].pos_y) == false)
+						{
+							Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+							break;
+						}
+					}
+					else
+					{
+						Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+						break;
+					}
+				}
 				break;
 			case 0:
 				Color_data[i].ColorBall[j].pos_x = 640;
-				Color_data[i].ColorBall[j].pos_y = GetRand(480);
+				while (true)
+				{
+					Color_data[i].ColorBall[j].pos_y = GetRand(640);
+					if (Color_data[i].Ball_posy_list.size() > 0)
+					{
+						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), Color_data[i].ColorBall[j].pos_y) == false)
+						{
+							Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+							break;
+						}
+					}
+					else
+					{
+						Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+						break;
+					}
+				}
 				break;
 			}
 			Color_data[i].ColorBall[j].def_x = Color_data[i].ColorBall[j].pos_x;
 			Color_data[i].ColorBall[j].def_y = Color_data[i].ColorBall[j].pos_y;
 		}
+		Color_data[i].Ball_posx_list.erase(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end());
+		Color_data[i].Ball_posy_list.erase(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end());
 		Color_data[i].ans = GetRand((Level_num * BALL_NUM) - 1);
 	}
 
@@ -206,4 +276,16 @@ void Game2_Draw()
 
 	clsDx();
 	printfDx("%d\n", Score_num);
+}
+
+bool Check_Overlap(std::vector<int>::iterator begin,
+	std::vector<int>::iterator end,
+	int num)
+{
+	std::vector<int>tmp(begin, end);
+	std::copy(begin, end, tmp.begin());
+	std::sort(tmp.begin(), tmp.end());
+	auto iter = std::lower_bound(tmp.begin(), tmp.end(), num);
+	if (iter != tmp.end()) { return (*iter == num ? true : false); }
+	return false;
 }
