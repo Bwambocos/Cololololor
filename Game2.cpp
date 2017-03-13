@@ -13,6 +13,7 @@
 #define STAGE_MAX 5
 #define BALL_NUM  3
 #define BALL_R	  15
+#define BALL_MIN_DISTANCE BALL_R * 2
 
 // ç\ë¢ëÃ
 struct Color_t
@@ -285,7 +286,13 @@ bool Check_Overlap(std::vector<int>::iterator begin,
 	std::vector<int>tmp(begin, end);
 	std::copy(begin, end, tmp.begin());
 	std::sort(tmp.begin(), tmp.end());
-	auto iter = std::lower_bound(tmp.begin(), tmp.end(), num);
-	if (iter != tmp.end()) { return (*iter == num ? true : false); }
-	return false;
+	auto min = std::lower_bound(tmp.begin(), tmp.end(), num - BALL_MIN_DISTANCE);
+	auto max = std::lower_bound(tmp.begin(), tmp.end(), num + BALL_MIN_DISTANCE);
+	if (min == tmp.end()) { min = tmp.end() - 1; }
+	if (max == tmp.end()) { max = tmp.end() - 1; }
+	if (abs(*min - num) > BALL_MIN_DISTANCE && abs(*max - num) > BALL_MIN_DISTANCE)
+	{
+		return false;
+	}
+	return true;
 }
