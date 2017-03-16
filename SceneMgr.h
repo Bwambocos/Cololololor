@@ -18,3 +18,5 @@ void SceneMgr_Draw();
 
 // ƒV[ƒ“•ÏX
 void SceneMgr_ChangeScene(Scene_S Nextscene);
+
+Scene_S get_prevScene();

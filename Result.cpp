@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include "Keyboard.h"
 #include "Game1.h"
+#include "Game2.h"
 #include "Mouse.h"
 
 // グローバル変数
@@ -26,12 +27,11 @@ void Result_Init()
 	G_Main_R[1] = LoadGraph("data\\graph\\Over_Main.png");
 	G_Select_R = LoadGraph("data\\graph\\Result_select.png");
 	S_Select_R = LoadSoundMem("data\\sound\\select.wav");
+	CorO_flag_R = getCorO_G1();
 }
 
 // 更新
 void Result_Update() {
-	if (getCorO_G1() == 0) { CorO_flag_R = 0; }
-	if (getCorO_G1() == -1) { CorO_flag_R = -1; }
 
 	if (CorO_flag_R == 0)
 	{
