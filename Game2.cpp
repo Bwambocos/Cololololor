@@ -1,5 +1,4 @@
 // include
-#include <ctime>
 #include <vector>
 #include <algorithm>
 #include "Game2.h"
