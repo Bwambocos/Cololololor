@@ -68,15 +68,15 @@ void Game2_Init1()
 					Color_data[i].ColorBall[j].pos_x = GetRand(640);
 					if (Color_data[i].Ball_posx_list.size() > 0)
 					{
-						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), Color_data[i].ColorBall[j].pos_x) == false)
+						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), (int)Color_data[i].ColorBall[j].pos_x) == false)
 						{
-							Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+							Color_data[i].Ball_posx_list.push_back((int)Color_data[i].ColorBall[j].pos_x);
 							break;
 						}
 					}
 					else
 					{
-						Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+						Color_data[i].Ball_posx_list.push_back((int)Color_data[i].ColorBall[j].pos_x);
 						break;
 					}
 				}
@@ -88,15 +88,15 @@ void Game2_Init1()
 					Color_data[i].ColorBall[j].pos_x = GetRand(640);
 					if (Color_data[i].Ball_posx_list.size() > 0)
 					{
-						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), Color_data[i].ColorBall[j].pos_x) == false)
+						if (Check_Overlap(Color_data[i].Ball_posx_list.begin(), Color_data[i].Ball_posx_list.end(), (int)Color_data[i].ColorBall[j].pos_x) == false)
 						{
-							Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+							Color_data[i].Ball_posx_list.push_back((int)Color_data[i].ColorBall[j].pos_x);
 							break;
 						}
 					}
 					else
 					{
-						Color_data[i].Ball_posx_list.push_back(Color_data[i].ColorBall[j].pos_x);
+						Color_data[i].Ball_posx_list.push_back((int)Color_data[i].ColorBall[j].pos_x);
 						break;
 					}
 				}
@@ -109,15 +109,15 @@ void Game2_Init1()
 					Color_data[i].ColorBall[j].pos_y = GetRand(640);
 					if (Color_data[i].Ball_posy_list.size() > 0)
 					{
-						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), Color_data[i].ColorBall[j].pos_y) == false)
+						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), (int)Color_data[i].ColorBall[j].pos_y) == false)
 						{
-							Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+							Color_data[i].Ball_posy_list.push_back((int)Color_data[i].ColorBall[j].pos_y);
 							break;
 						}
 					}
 					else
 					{
-						Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+						Color_data[i].Ball_posy_list.push_back((int)Color_data[i].ColorBall[j].pos_y);
 						break;
 					}
 				}
@@ -129,15 +129,15 @@ void Game2_Init1()
 					Color_data[i].ColorBall[j].pos_y = GetRand(640);
 					if (Color_data[i].Ball_posy_list.size() > 0)
 					{
-						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), Color_data[i].ColorBall[j].pos_y) == false)
+						if (Check_Overlap(Color_data[i].Ball_posy_list.begin(), Color_data[i].Ball_posy_list.end(), (int)Color_data[i].ColorBall[j].pos_y) == false)
 						{
-							Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+							Color_data[i].Ball_posy_list.push_back((int)Color_data[i].ColorBall[j].pos_y);
 							break;
 						}
 					}
 					else
 					{
-						Color_data[i].Ball_posy_list.push_back(Color_data[i].ColorBall[j].pos_y);
+						Color_data[i].Ball_posy_list.push_back((int)Color_data[i].ColorBall[j].pos_y);
 						break;
 					}
 				}
@@ -192,8 +192,8 @@ void Game2_Update()
 
 		// クリック判定
 		{
-			if (CheckMouseClick(Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
-				Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
+			if (CheckMouseClick((int)Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
+				(int)Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
 			{
 				if (i == Color_data[Stage_num - 1].ans)
 				{
@@ -201,8 +201,8 @@ void Game2_Update()
 					SceneMgr_ChangeScene(Scene_Game2);
 				}
 			}
-			if (CheckMouseIn(Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
-				Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
+			if (CheckMouseIn((int)Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
+				(int)Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
 			{
 				Color_data[Stage_num - 1].ColorBall[i].mouse_in = true;
 			}
@@ -251,14 +251,14 @@ void Game2_Draw()
 	// 色玉
 	for (int i = 0; i < Level_num * BALL_NUM; ++i)
 	{
-		DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
+		DrawCircle((int)Color_data[Stage_num - 1].ColorBall[i].pos_x, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
 		if (Color_data[Stage_num - 1].ColorBall[i].mouse_in == true)
 		{
-			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
+			DrawCircle((int)Color_data[Stage_num - 1].ColorBall[i].pos_x, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
 		}
 		else
 		{
-			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
+			DrawCircle((int)Color_data[Stage_num - 1].ColorBall[i].pos_x, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
 		}
 	}
 
