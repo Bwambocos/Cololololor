@@ -1,9 +1,9 @@
 // include
 #include <vector>
 #include <algorithm>
+#include "DxLib.h"
 #include "Game2.h"
 #include "SceneMgr.h"
-#include "DxLib.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 
