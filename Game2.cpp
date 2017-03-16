@@ -39,7 +39,7 @@ struct problem
 };
 
 // ’è”
-static const int BALL_MOVE_COST = 225;
+static const int BALL_MOVE_COST = 230;
 
 // •Ï”
 problem Color_data[STAGE_MAX];
