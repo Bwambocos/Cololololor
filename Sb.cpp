@@ -3,6 +3,7 @@
 #include "Sb.h"
 #include "Mouse.h"
 #include "Game1.h"
+#include "Game2.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -19,6 +20,7 @@ typedef struct
 int G_Main_Sb = -1;
 int G_select_Sb;
 int S_select_Sb;
+Scene_S Game_Mode;
 bool name_change_flag = false;
 int Fonthandle_Sb;
 char name_Sb[23] = { '\0' };
@@ -36,6 +38,7 @@ char Filename_Sb[50] = { '\0' };
 // èâä˙âª
 void Sb_Init()
 {
+	Game_Mode = get_prevScene();
 	if (G_Main_Sb == -1)
 	{
 		G_Main_Sb = LoadGraph("data\\graph\\Sb_Main.png");
@@ -48,9 +51,18 @@ void Sb_Init()
 		for (int j = 0; j < 23; j++) { save_data[i].name[j] = '\0'; }
 		save_data[i].score = 0;
 	}
-	Score_Sb = getScore_G1();
-	Level_Sb = getLevel_G1();
-	sprintfDx(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
+	if (Game_Mode == Scene_Game1)
+	{
+		Score_Sb = getScore_G1();
+		Level_Sb = getLevel_G1();
+		sprintfDx(Filename_Sb, "data\\save\\t1\\dog_food_%d.dat", Level_Sb);
+	}
+	if (Game_Mode == Scene_Game2)
+	{
+		Score_Sb = getScore_G2();
+		Level_Sb = getLevel_G2();
+		sprintfDx(Filename_Sb, "data\\save\\t2\\dog_food_%d.dat", Level_Sb);
+	}
 	if (errno_t error = (fopen_s(&fp, Filename_Sb, "rb")) != 0 || fp == NULL)
 	{
 		printfDx("FILE READ ERROR\n");
@@ -99,7 +111,14 @@ void Sb_Update()
 		{
 			if ((strcmp(save_data[i].name, name_Sb)) == 0)
 			{
-				save_data[i].score = getScore_G1();
+				switch (Game_Mode)
+				{
+				case Scene_Game1:
+					save_data[i].score = getScore_G1();
+					break;
+				case Scene_Game2:
+					save_data[i].score = getScore_G2();
+				}
 				name_change_flag = true;
 				break;
 			}
@@ -107,11 +126,28 @@ void Sb_Update()
 		if (name_change_flag == false)
 		{
 			strcpy_s(save_data[11].name, name_Sb);
-			save_data[11].score = getScore_G1();
+			switch (Game_Mode)
+			{
+			case Scene_Game1:
+				save_data[11].score = getScore_G1();
+				break;
+			case Scene_Game2:
+				save_data[11].score = getScore_G2();
+				break;
+			}
 		}
 		sort(begin(save_data), end(save_data), [](const save_data_t&l, const save_data_t&r) {return l.score > r.score; });
-		Level_Sb = getLevel_G1();
-		sprintfDx(Filename_Sb, "data\\save\\dog_food_%d.dat", Level_Sb);
+		switch (Game_Mode)
+		{
+		case Scene_Game1:
+			Level_Sb = getLevel_G1();
+			sprintfDx(Filename_Sb, "data\\save\\t1\\dog_food_%d.dat", Level_Sb);
+			break;
+		case Scene_Game2:
+			Level_Sb = getLevel_G2();
+			sprintfDx(Filename_Sb, "data\\save\\t2\\dog_food_%d.dat", Level_Sb);
+			break;
+		}
 		if (errno_t error = (fopen_s(&fp, Filename_Sb, "wb")) != 0 || fp == NULL)
 		{
 			printfDx("FILE WRITE ERROR\n");

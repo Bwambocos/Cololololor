@@ -8,8 +8,8 @@
 
 // グローバル変数
 static Scene_S Scene = Scene_Menu;
+static Scene_S prevScene = Scene_Menu;
 bool game1_flag1 = true, game1_flag2 = true, game2_flag1 = true, game2_flag2 = true, result_flag = true, sb_flag = true;
-
 
 // 更新
 void SceneMgr_Update()
@@ -68,6 +68,10 @@ void SceneMgr_Draw()
 // シーン変更
 void SceneMgr_ChangeScene(Scene_S Nextscene)
 {
+	if (Scene == Scene_Game1 || Scene == Scene_Game2)
+	{
+		prevScene = Scene;
+	}
 	Scene = Nextscene;
 	switch (Scene)
 	{
@@ -98,4 +102,9 @@ void SceneMgr_ChangeScene(Scene_S Nextscene)
 		Sb_Init();
 		break;
 	}
+}
+
+Scene_S get_prevScene()
+{
+	return prevScene;
 }
