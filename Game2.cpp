@@ -30,7 +30,6 @@ struct ball
 	double pos_x, pos_y;
 	double def_x, def_y;
 	bool mouse_in = false;
-	bool draw_flag = true;
 };
 struct problem
 {
@@ -196,7 +195,6 @@ void Game2_Update()
 			if (CheckMouseClick(Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
 				Color_data[Stage_num - 1].ColorBall[i].pos_x + BALL_R, Color_data[Stage_num - 1].ColorBall[i].pos_y + BALL_R) == true)
 			{
-				Color_data[Stage_num - 1].ColorBall[i].draw_flag = false;
 				if (i == Color_data[Stage_num - 1].ans)
 				{
 					Score_num += ((BALL_MOVE_COST * 40) - (g_lasttime - g_starttime));
@@ -253,17 +251,14 @@ void Game2_Draw()
 	// êFã 
 	for (int i = 0; i < Level_num * BALL_NUM; ++i)
 	{
-		if (Color_data[Stage_num - 1].ColorBall[i].draw_flag == true)
+		DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
+		if (Color_data[Stage_num - 1].ColorBall[i].mouse_in == true)
 		{
-			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[i].color), TRUE);
-			if (Color_data[Stage_num - 1].ColorBall[i].mouse_in == true)
-			{
-				DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
-			}
-			else
-			{
-				DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
-			}
+			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
+		}
+		else
+		{
+			DrawCircle(Color_data[Stage_num - 1].ColorBall[i].pos_x, Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
 		}
 	}
 
