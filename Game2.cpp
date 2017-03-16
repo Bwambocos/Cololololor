@@ -197,7 +197,14 @@ void Game2_Update()
 				if (i == Color_data[Stage_num - 1].ans)
 				{
 					Score_num += ((BALL_MOVE_COST * 40) - (g_lasttime - g_starttime));
-					SceneMgr_ChangeScene(Scene_Game2);
+					if (Stage_num == STAGE_MAX)
+					{
+						SceneMgr_ChangeScene(Scene_Result);
+					}
+					else
+					{
+						SceneMgr_ChangeScene(Scene_Game2);
+					}
 				}
 			}
 			if (CheckMouseIn((int)Color_data[Stage_num - 1].ColorBall[i].pos_x - BALL_R, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y - BALL_R,
@@ -289,4 +296,16 @@ bool Check_Overlap(std::vector<int>::iterator begin,
 		return false;
 	}
 	return true;
+}
+
+// Score‚ð•Ô‚·
+int getScore_G2()
+{
+	return Score_num;
+}
+
+// Level‚ð•Ô‚·
+int getLevel_G2()
+{
+	return Level_num;
 }

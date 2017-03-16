@@ -15,3 +15,9 @@ void Game2_Draw();
 
 // 座標被りチェック
 bool Check_Overlap(std::vector<int>::iterator begin, std::vector<int>::iterator end, int num);
+
+// Scoreを返す
+int getScore_G2();
+
+// Levelを返す
+int getLevel_G2();
