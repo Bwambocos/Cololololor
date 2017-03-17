@@ -9,7 +9,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 
 	// èîèàóù
 	SetOutApplicationLogValidFlag(FALSE);
-	SetMainWindowText("Cololololor! v1.0");
+	SetMainWindowText("Cololololor! v2.0");
 	SetGraphMode(640, 480, 32);
 	SetWindowSize(640, 480);
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);

@@ -153,9 +153,10 @@ void Game2_Init1()
 	if (G_Main == -1)
 	{
 		G_Main = LoadGraph("data\\graph\\Game2_Main.png");
-		S_BGM = LoadSoundMem("data\\sound\\bgm.mp3");
+		S_BGM = LoadSoundMem("data\\sound\\bgm2.mp3");
 		F_Main = CreateFontToHandle("Meiryo UI", 32, 5, DX_FONTTYPE_ANTIALIASING_8X8);
 	}
+	PlaySoundMem(S_BGM, DX_PLAYTYPE_LOOP, FALSE);
 }
 
 // èâä˙âªÅiñàâÒÅj
@@ -199,6 +200,7 @@ void Game2_Update()
 					Score_num += ((BALL_MOVE_COST * 40) - (g_lasttime - g_starttime));
 					if (Stage_num == STAGE_MAX)
 					{
+						StopSoundMem(S_BGM);
 						SceneMgr_ChangeScene(Scene_Result);
 					}
 					else
@@ -262,10 +264,6 @@ void Game2_Draw()
 		{
 			DrawCircle((int)Color_data[Stage_num - 1].ColorBall[i].pos_x, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 0), FALSE, 2);
 		}
-		else
-		{
-			DrawCircle((int)Color_data[Stage_num - 1].ColorBall[i].pos_x, (int)Color_data[Stage_num - 1].ColorBall[i].pos_y, BALL_R, GetColor(255, 255, 255), FALSE, 2);
-		}
 	}
 
 	// âÊëú
@@ -275,9 +273,6 @@ void Game2_Draw()
 	DrawFormatStringToHandle(45, 410, GetColor(0, 0, 0), F_Main, "LEVEL %d", Level_num);
 	DrawFormatStringToHandle(450, 410, GetColor(0, 0, 0), F_Main, "STAGE %d", Stage_num);
 	DrawRoundRect(285, 380, 355, 450, 15, 15, ColorToDxColor(Color_data[Stage_num - 1].ColorBall[Color_data[Stage_num - 1].ans].color), TRUE);
-
-	clsDx();
-	printfDx("%d\n", Score_num);
 }
 
 bool Check_Overlap(std::vector<int>::iterator begin,

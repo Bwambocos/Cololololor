@@ -11,6 +11,7 @@ int G_Main_R[2];
 int G_Select_R;
 int S_Select_R;
 int CorO_flag_R;
+Scene_S Game_Mode_R;
 bool F_frame_R = false;
 bool F_frame1_R = false;
 bool F_frame2_R = false;
@@ -32,6 +33,7 @@ void Result_Init()
 // çXêV
 void Result_Update() {
 	CorO_flag_R = getCorO_G1();
+	Game_Mode_R = get_prevScene();
 	if (CorO_flag_R == 0)
 	{
 		if (CheckMouseIn(100, 150, 530, 200) == true)
@@ -51,7 +53,10 @@ void Result_Update() {
 		{
 			F_frame1_R = false; F_sound1_R = false; before_R = -1;
 		}
-		if (CheckMouseClick(70, 250, 560, 320) == true) { SceneMgr_ChangeScene(Scene_Game1); }
+		if (CheckMouseClick(70, 250, 560, 320) == true)
+		{
+			SceneMgr_ChangeScene(Game_Mode_R);
+		}
 	}
 	if (CorO_flag_R == -1)
 	{
@@ -63,7 +68,10 @@ void Result_Update() {
 		{
 			F_frame1_R = false; F_sound1_R = false; before_R = -1;
 		}
-		if (CheckMouseClick(70, 240, 560, 290) == true) { SceneMgr_ChangeScene(Scene_Game1); }
+		if (CheckMouseClick(70, 240, 560, 290) == true)
+		{
+			SceneMgr_ChangeScene(Game_Mode_R);
+		}
 	}
 	if (CheckMouseIn(70, 350, 560, 420) == true)
 	{
