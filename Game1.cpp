@@ -101,6 +101,7 @@ void Game1_Update()
 		CorO_flag_G1 = -1;
 		Level_num_G1--;
 		Stage_num_G1 = STAGE_MAX - 1;
+		StopSoundMem(S_BGM_G1);
 		SceneMgr_ChangeScene(Scene_Result);
 	}
 	if ((CheckMouseClick(Mouse_XY_G1[Color_data_G1[Stage_num_G1].Ans][0], Mouse_XY_G1[Color_data_G1[Stage_num_G1].Ans][1], Mouse_XY_G1[Color_data_G1[Stage_num_G1].Ans][0] + Mouse_memo_G1, Mouse_XY_G1[Color_data_G1[Stage_num_G1].Ans][1] + Mouse_memo_G1)) == true)
