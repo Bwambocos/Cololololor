@@ -27,12 +27,11 @@ void Result_Init()
 	G_Main_R[1] = LoadGraph("data\\graph\\Over_Main.png");
 	G_Select_R = LoadGraph("data\\graph\\Result_select.png");
 	S_Select_R = LoadSoundMem("data\\sound\\select.wav");
-	CorO_flag_R = getCorO_G1();
 }
 
 // çXêV
 void Result_Update() {
-
+	CorO_flag_R = getCorO_G1();
 	if (CorO_flag_R == 0)
 	{
 		if (CheckMouseIn(100, 150, 530, 200) == true)
